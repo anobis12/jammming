@@ -8,8 +8,8 @@ import TrackList from '../TrackList/TrackList'
     render() {
         return (
             <div className="Playlist">
-                <input defaultValue={'New Playlist'}/>
-                <TrackList tracks={this.props.tracks}/>
+                <input defaultValue={this.props.name}/>
+                <TrackList tracks={this.props.playlistTracks} remove={this.props.remove} isRemoval={true}/>
                 <button className="Playlist-save">SAVE TO SPOTIFY</button>
             </div>
         )

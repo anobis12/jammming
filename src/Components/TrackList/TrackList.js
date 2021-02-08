@@ -9,7 +9,11 @@ import Track from '../Track/Track';
             <div className="TrackList">
                 {this.props.tracks.map(track => {
                     return <Track track={track}
-                            key={track.id}/>
+                            key={track.id}
+                            onAdd = {this.props.onAdd}
+                            remove = {this.props.remove}
+                            isRemoval = {this.props.isRemoval}
+                            />
                 })}
             </div>
         )
