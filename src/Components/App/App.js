@@ -24,6 +24,7 @@ import Playlist from '../Playlist/Playlist'
     }
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
+    this.updatesPlaylistName = this.updatesPlaylistName.bind(this)
   }
 
   addTrack(track) {
@@ -42,6 +43,10 @@ import Playlist from '../Playlist/Playlist'
     this.setState({playlistTracks:tracks})
   }
 
+  updatesPlaylistName(input) {
+    this.setState({playlistName: input})
+  }
+
   render (){
     return (
       <div>
@@ -49,8 +54,12 @@ import Playlist from '../Playlist/Playlist'
     <div className="App">
       <SearchBar /> 
         <div className="App-playlist">
-        <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack}/>
-        <Playlist  name={this.state.playlistName} playlistTracks={this.state.playlistTracks} remove={this.removeTrack}/>
+        <SearchResults searchResults={this.state.searchResults} 
+                       onAdd={this.addTrack}/>
+        <Playlist  name={this.state.playlistName} 
+                   playlistTracks={this.state.playlistTracks} 
+                   remove={this.removeTrack}
+                   onUpdateName={this.updatesPlaylistName}/>
       </div>
     </div>
   </div>
