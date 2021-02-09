@@ -42,7 +42,7 @@ import Spotify from '../../util/Spotify'
   }
 
   savePlaylist() {
-    const trackUris = this.playlistTracks.map(track => track.uri)
+    const trackUris = this.state.playlistTracks.map(track => track.uri)
     Spotify.savePlaylist(this.state.playlistName, trackUris).then (() => {
       this.setState ({
         playlistName: 'New Playlist',
@@ -55,6 +55,10 @@ import Spotify from '../../util/Spotify'
     Spotify.search(term).then(searchResults => {
       this.setState({ searchResults: searchResults })
     })
+  }
+
+  componentDidMount() {
+    window.addEventListener('load', () => {Spotify.getAccessToken()});
   }
 
   render (){
