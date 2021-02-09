@@ -26,7 +26,7 @@ const Spotify = {
             return accessToken;
         }
         else {
-            const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}`
+            const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`
             window.location = accessUrl;
         }
      },
@@ -64,6 +64,7 @@ const Spotify = {
         return fetch('https://api.spotify.com/v1/me', { headers: headers}
         ).then(response => response.json()
         ).then(jsonResponse => {
+            console.log(jsonResponse)
             userId = jsonResponse.id
             return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`,
             {
@@ -73,6 +74,7 @@ const Spotify = {
             }).then(response => response.json()
             ).then(jsonResponse => {
                 const playlistId = jsonResponse.id;
+                console.log(jsonResponse)
                 return fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks`,{
                     headers: headers,
                     method: 'POST',
