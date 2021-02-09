@@ -7,20 +7,19 @@ import './SearchBar.css';
         this.state = {
             term: ''
         }
-        this.handleSearch = this.handleSearch.bind(this);
         this.search = this.search.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+    }
+
+    search() {
+        this.props.onSearch(this.state.term)
     }
 
     handleSearch(e) {
         this.setState({ term: e.target.value })
     }
 
-    search() {
-        this.props.onSearch(this.state.term)
-    }
     
-    
-
     render() {
         return (
             <div className="SearchBar">
