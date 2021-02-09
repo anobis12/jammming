@@ -1,0 +1,29 @@
+.UserDetails {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 10px;
+    margin-top: 10px;
+}
+
+.UserDetails img {
+    height: 130px;
+    border-radius: 10px;
+}
+
+.UserDetails h2 {
+    padding: 1rem;
+}
+
+@media only screen and (max-width: 1020px) {
+    .UserDetails {
+      width: 50%;
+    }
+    .UserDetails img {
+        height: 75px;
+    }
+    .UserDetails h2 {
+        padding: 0 0 0 .5rem;
+        font-size: 1.25rem;
+    }
+  }

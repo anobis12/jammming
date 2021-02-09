@@ -83,6 +83,20 @@ const Spotify = {
                 })
             })
         })
+    },
+    setUserDetails(){
+        const accessToken = Spotify.getAccessToken();
+        const headers = { Authorization: `Bearer ${accessToken}`};
+        let userName;
+        let userImgUrl;
+
+        return fetch('https://api.spotify.com/v1/me', { headers: headers}
+        ).then(response => response.json()
+        ).then(jsonResponse => {
+            userName = jsonResponse.display_name;
+            userImgUrl =jsonResponse.images[0].url;
+            return [userName,userImgUrl]
+        })
     }
 
 }

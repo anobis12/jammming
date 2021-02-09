@@ -5,6 +5,7 @@ import SearchBar from '../SearchBar/SearchBar'
 import SearchResults from '../SearchResults/SearchResults'
 import Playlist from '../Playlist/Playlist'
 import Spotify from '../../util/Spotify'
+import UserDetails from '../UserDetails/UserDetails'
 
 
  class App extends React.Component {
@@ -12,7 +13,9 @@ import Spotify from '../../util/Spotify'
     super(props)
     this.state = { searchResults: [],
                    playlistName: '',
-                   playlistTracks: []
+                   playlistTracks: [],
+                   userName: '',
+                   userImgUrl: ''
     }
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
@@ -58,8 +61,16 @@ import Spotify from '../../util/Spotify'
     })
   }
 
+  setUserDetails() {
+    Spotify.setUserDetails().then(userDetails => {
+    this.setState({userName: userDetails[0],
+                  userImgUrl: userDetails[1]})
+    })
+  }
+
   componentDidMount() {
     window.addEventListener('load', () => {Spotify.getAccessToken()});
+    window.addEventListener('load', () => {this.setUserDetails()})
   }
 
   render (){
@@ -67,6 +78,8 @@ import Spotify from '../../util/Spotify'
       <div>
     <h1>Ja<span className="highlight">mmm</span>ing</h1>
     <div className="App">
+      <UserDetails userName={this.state.userName}
+                   userImgUrl={this.state.userImgUrl}/>
       <SearchBar onSearch={this.search}/> 
         <div className="App-playlist">
         <SearchResults searchResults={this.state.searchResults} 
