@@ -11,7 +11,7 @@ import Spotify from '../../util/Spotify'
   constructor(props){
     super(props)
     this.state = { searchResults: [],
-                   playlistName: 'New Playlist',
+                   playlistName: '',
                    playlistTracks: []
     }
     this.addTrack = this.addTrack.bind(this);
@@ -49,6 +49,7 @@ import Spotify from '../../util/Spotify'
         playlistTracks: []
       })
     })
+    document.querySelectorAll('input')[1].value = '';
   }
 
   search(term) {

@@ -18,6 +18,7 @@ import TrackList from '../TrackList/TrackList'
         return (
             <div className="Playlist">
                 <input defaultValue={this.props.name} 
+                        placeholder= 'Playlist Name'
                        onChange={this.handleNameChange}/>
 
                 <TrackList tracks={this.props.playlistTracks} remove={this.props.remove} isRemoval={true}/>
