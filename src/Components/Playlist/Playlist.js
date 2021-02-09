@@ -21,7 +21,7 @@ import TrackList from '../TrackList/TrackList'
                        onChange={this.handleNameChange}/>
 
                 <TrackList tracks={this.props.playlistTracks} remove={this.props.remove} isRemoval={true}/>
-                <button className="Playlist-save">SAVE TO SPOTIFY</button>
+                <button onClick={this.props.onSave} className="Playlist-save">SAVE TO SPOTIFY</button>
             </div>
         )
     }
