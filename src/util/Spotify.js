@@ -1,6 +1,7 @@
 
 const clientId = '5df4877233ba46de82e616c0ddd81d6a'
-const redirectUri = 'http://alexspotify-jammmingapp.surge.sh'
+//const redirectUri = 'http://alexspotify-jammmingapp.surge.sh'
+const redirectUri = 'http://localhost:3000'
 
 
 let accessToken; 
@@ -26,7 +27,7 @@ const Spotify = {
             return accessToken;
         }
         else {
-            const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`
+            const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&scope=playlist-read-private&redirect_uri=${redirectUri}`
             window.location = accessUrl;
         }
      },
@@ -64,7 +65,6 @@ const Spotify = {
         return fetch('https://api.spotify.com/v1/me', { headers: headers}
         ).then(response => response.json()
         ).then(jsonResponse => {
-            console.log(jsonResponse)
             userId = jsonResponse.id
             return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`,
             {
@@ -74,7 +74,6 @@ const Spotify = {
             }).then(response => response.json()
             ).then(jsonResponse => {
                 const playlistId = jsonResponse.id;
-                console.log(jsonResponse)
                 return fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks`,{
                     headers: headers,
                     method: 'POST',
@@ -97,6 +96,29 @@ const Spotify = {
             userImgUrl =jsonResponse.images[0].url;
             return [userName,userImgUrl]
         })
+    },
+    getPlaylists(){
+
+        const accessToken = Spotify.getAccessToken();
+        const headers = { Authorization: `Bearer ${accessToken}`};
+        let userId;
+        let localPlaylists = []
+
+        return fetch('https://api.spotify.com/v1/me', { headers: headers}
+        ).then(response => response.json()
+        ).then(jsonResponse => {
+            userId = jsonResponse.id
+            return fetch(`https://api.spotify.com/v1/users/${userId}/playlists?limit=50`,{ headers: headers }
+            ).then(response => response.json()
+            ).then(jsonResponse => {
+                for (let i = 0; i<jsonResponse.items.length; i++){
+                    localPlaylists.push( { name: jsonResponse.items[i].name,
+                                     id: jsonResponse.items[i].id})
+                }
+                return localPlaylists;
+            })
+        })
+
     }
 
 }

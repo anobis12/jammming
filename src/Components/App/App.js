@@ -6,6 +6,7 @@ import SearchResults from '../SearchResults/SearchResults'
 import Playlist from '../Playlist/Playlist'
 import Spotify from '../../util/Spotify'
 import UserDetails from '../UserDetails/UserDetails'
+import LocalPlaylists from '../LocalPlaylists/LocalPlaylists'
 
 
  class App extends React.Component {
@@ -15,7 +16,15 @@ import UserDetails from '../UserDetails/UserDetails'
                    playlistName: '',
                    playlistTracks: [],
                    userName: '',
-                   userImgUrl: ''
+                   userImgUrl: '',
+                   localPlaylists:  [
+                      {name:'playlist2',
+                      id:32423532},
+                      {name:'playlist3',
+                      id:234324235},
+                      {name:'playlist4',
+                      id:23423445}
+                        ]
     }
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
@@ -51,7 +60,9 @@ import UserDetails from '../UserDetails/UserDetails'
         playlistName: 'New Playlist',
         playlistTracks: []
       })
-    })
+    }).then(()=>{
+    this.displayLocalPlaylists();
+  })
     document.querySelectorAll('input')[1].value = '';
   }
 
@@ -67,10 +78,16 @@ import UserDetails from '../UserDetails/UserDetails'
                   userImgUrl: userDetails[1]})
     })
   }
+  displayLocalPlaylists() {
+    Spotify.getPlaylists().then(playlists => {
+      this.setState({localPlaylists: playlists})
+    })
+  }
 
   componentDidMount() {
     window.addEventListener('load', () => {Spotify.getAccessToken()});
-    window.addEventListener('load', () => {this.setUserDetails()})
+    window.addEventListener('load', () => {this.setUserDetails()});
+    window.addEventListener('load', () => {this.displayLocalPlaylists ()});
   }
 
   render (){
@@ -89,6 +106,7 @@ import UserDetails from '../UserDetails/UserDetails'
                    remove={this.removeTrack}
                    onUpdateName={this.updatesPlaylistName}
                    onSave={this.savePlaylist}/>
+        <LocalPlaylists items={this.state.localPlaylists}/>
       </div>
     </div>
   </div>
